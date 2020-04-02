@@ -5,10 +5,11 @@ from engine.drawable import Drawable
 from engine.utils.vector_ops import *
 from engine.utils.constants import *
 
-class Person(Circle):
+class Person:
 
-    def __init__(self, r = 10.0):
-        super().__init__(r)
+    def __init__(self, x=0, y=0, r = 5.0):
+        self.visual = Circle(0, 0, r)
+        self.gravity_well_visual = Circle(0, 0, 3)
 
         self.time = 0
         self.last_step_change = -1
@@ -16,15 +17,16 @@ class Person(Circle):
         self.dl_bound = np.array((0, 0))
         self.ur_bound = np.array((540, 480))
 
-        self.max_speed = 65
+        self.position = np.array((x, y, 0))
+        self.max_speed = 30
         self.velocity = np.zeros(3)
 
         self.gravity_well = None
-        self.gravity_strength = 2000000
-        self.wander_step_size = 150
+        self.gravity_strength = 500000
+        self.wander_step_size = 100
         self.wander_step_duration = 2
 
-        self.wall_buffer = 50
+        self.wall_buffer = 20
         self.wall_strength = 10000
 
     
@@ -34,10 +36,12 @@ class Person(Circle):
         # Wander
         if self.wander_step_size != 0:
             if (self.time - self.last_step_change) > self.wander_step_duration:
-                vect = rotate_vector(RIGHT, TAU * random.random())
-                self.gravity_well = (self.position + self.wander_step_size) * vect
+                vect = z_rotation(RIGHT, TAU * random.random())
+                self.gravity_well = self.position + (self.wander_step_size * vect)
                 self.last_step_change = self.time
-        
+                # DEBUG: Gravity well visual
+                self.gravity_well_visual.position = self.gravity_well
+
         if self.gravity_well is not None:
             to_well = (self.gravity_well - self.position)
             dist = get_norm(to_well)
@@ -77,4 +81,11 @@ class Person(Circle):
 
     def shift(self, vector):
         self.position += vector
+        self.visual.position = self.position
         return self
+    
+    def render(self):
+        self.visual.render()
+        # DEBUG: Draw gravity well
+        #self.gravity_well_visual.render()
+
