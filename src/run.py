@@ -1,36 +1,33 @@
-import sys
-from math import pi, sin, cos
 import pyglet
+import numpy as np
 from engine.circle import Circle
+from engine.engine import Engine
+from models.person import Person
 
-window = pyglet.window.Window(width=540, height=480, resizable=False)
+# Settings
+windowWidth = 540
+windowHeight = 480
+fps = 60
+resizable = False
 
-c = Circle()
-c.x = 0
-c.y = 240
-v = 2
+window = pyglet.window.Window(width=windowWidth, height=windowHeight, resizable=resizable)
+eng = Engine(540, 480, 60, False)
 
-drawables = []
-drawables.append(c)
+# for i in range(100):
+p = Person()
+p.position = np.array((270., 240., 0.))
+
+eng.drawables.append(p)
+eng.updatables.append(p)
 
 @window.event
 def on_draw():
     window.clear()
-    for d in drawables:
-        d.render()
+    eng.render()
 
 def update(dt):
-    global c
-    global v
-    if c.x >= window.width:
-        c.x = window.width
-        v = -v
-    if c.x <= 0:
-        c.x = 0
-        v = -v
-    
-    c.x = c.x + v
+    eng.update(dt)
 
 if __name__ == "__main__":
-    pyglet.clock.schedule_interval(update, 1/60)
+    pyglet.clock.schedule_interval(update, 1/fps)
     pyglet.app.run()
