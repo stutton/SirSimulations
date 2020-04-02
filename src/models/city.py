@@ -1,4 +1,5 @@
 import numpy as np
+import random
 from engine.box import Box
 
 class City:
@@ -8,8 +9,8 @@ class City:
 
         # Properties
         self.population = 100
-        self.position = np.array((20, 20, 0))
-        self.size = np.array((500, 440, 0))
+        self.position = np.array((x, y, 0))
+        self.size = np.array((w, h, 0))
 
         # People
         self.people = []
@@ -17,7 +18,11 @@ class City:
     def add_person(self, person):
         self.people.append(person)
         person.city = self
-        person.position = self.size / 2 + self.position
+        person.position = np.array((
+            self.size[0] * random.random() + self.position[0],
+            self.size[1] * random.random() + self.position[1],
+            0
+        ))
         person.set_bounds(self.position, self.position + self.size)
 
     def render(self):

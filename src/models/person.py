@@ -41,7 +41,7 @@ class Person:
 
         # Infection
         self.status = "S" # SRI status
-        self.infection_radius = 15
+        self.infection_radius = 30
         self.infection_start_time = np.inf
         self.infection_end_time = np.inf
         self.num_infected = 0
@@ -50,6 +50,7 @@ class Person:
     def update(self, dt):
         total_force = np.zeros(3)
         self.time += dt
+
         # Wander
         if self.wander_step_size != 0:
             if (self.time - self.last_step_change) > self.wander_step_duration:
@@ -67,7 +68,7 @@ class Person:
         
         # TODO: Social distance
 
-        # TODO: Avoid walls
+        # Avoid walls
         wall_force = np.zeros(3)
         for i in range(2):
             to_lower = self.position[i] - self.dl_bound[i]
@@ -98,6 +99,16 @@ class Person:
     def set_bounds(self, dl, ur):
         self.dl_bound = dl
         self.ur_bound = ur
+
+    def set_status(self, status):
+        self.set_color(COLOR_MAP[status])
+
+        if status == "I":
+            self.infection_start_time = self.time
+        if status == "R":
+            self.infection_end_time = self.time
+        
+        self.status = status
 
     def shift(self, vector):
         self.position += vector

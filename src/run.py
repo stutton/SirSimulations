@@ -7,23 +7,13 @@ from models.person import Person
 from models.sir_simulation import SirSimulation
 
 # Settings
-windowWidth = 540
-windowHeight = 480
+windowWidth = 500
+windowHeight = 500
 fps = 60
 resizable = False
 
 window = pyglet.window.Window(width=windowWidth, height=windowHeight, resizable=resizable)
-eng = Engine(540, 480, 60, False)
-
-# for i in range(100):
-#     p = Person()
-#     p.position = np.array((270., 240., 0.))
-
-#     eng.drawables.append(p)
-#     eng.updatables.append(p)
-
-# b = Box(50, 50)
-# eng.drawables.append(b)
+eng = Engine(500, 500, 60, False)
 
 sir = SirSimulation()
 eng.drawables.append(sir)
