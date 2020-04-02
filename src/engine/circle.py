@@ -8,7 +8,6 @@ class Circle(Drawable):
         super().__init__()
 
         self.mode = GL_TRIANGLE_FAN
-
         self.position = np.array([x, y, 0.])
         self.radius = r
     

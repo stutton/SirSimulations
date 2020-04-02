@@ -5,30 +5,47 @@ from engine.drawable import Drawable
 from engine.utils.vector_ops import *
 from engine.utils.constants import *
 
+COLOR_MAP = {
+    "S": BLUE,
+    "I": RED,
+    "R": GREY
+}
+
 class Person:
 
     def __init__(self, x=0, y=0, r = 5.0):
+        # Visuals
+        self.color = WHITE
         self.visual = Circle(0, 0, r)
+        self.visual.color = self.color
         self.gravity_well_visual = Circle(0, 0, 3)
 
+        # Time
         self.time = 0
         self.last_step_change = -1
 
+        # Bounds
         self.dl_bound = np.array((0, 0))
         self.ur_bound = np.array((540, 480))
 
+        # Movement
         self.position = np.array((x, y, 0))
-        self.max_speed = 30
         self.velocity = np.zeros(3)
-
+        self.max_speed = 30
         self.gravity_well = None
         self.gravity_strength = 500000
         self.wander_step_size = 100
         self.wander_step_duration = 2
-
         self.wall_buffer = 20
         self.wall_strength = 10000
 
+        # Infection
+        self.status = "S" # SRI status
+        self.infection_radius = 15
+        self.infection_start_time = np.inf
+        self.infection_end_time = np.inf
+        self.num_infected = 0
+        self.city = None
     
     def update(self, dt):
         total_force = np.zeros(3)
@@ -78,11 +95,17 @@ class Person:
         
         self.shift(self.velocity * dt)
 
+    def set_bounds(self, dl, ur):
+        self.dl_bound = dl
+        self.ur_bound = ur
 
     def shift(self, vector):
         self.position += vector
         self.visual.position = self.position
         return self
+    
+    def set_color(self, color):
+        self.visual.color = color
     
     def render(self):
         self.visual.render()
