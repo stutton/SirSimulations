@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "I+Bgom1Ene7DDo0Dz+2tl4Ut+hQyQy1IfVxF9wW/uHGATMIV0zUB4lZEiH30qwTK6AiYe+HSwODbVMMLPBxpag==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Stephen\\Source\\Repos\\SirSimulations\\src\\MonoGame\\SirSimulation\\SirSimulation.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Stephen\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Stephen\\.nuget\\packages\\monogame.extended\\3.7.0\\monogame.extended.3.7.0.nupkg.sha512",
+    "C:\\Users\\Stephen\\.nuget\\packages\\monogame.extended.graphics\\3.7.0\\monogame.extended.graphics.3.7.0.nupkg.sha512",
+    "C:\\Users\\Stephen\\.nuget\\packages\\monogame.framework.desktopgl.core\\3.8.0.13\\monogame.framework.desktopgl.core.3.8.0.13.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\Stephen\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,9 @@
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation\bin\Debug\netstandard2.0\SirSimulation.deps.json
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation\bin\Debug\netstandard2.0\SirSimulation.dll
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation\bin\Debug\netstandard2.0\SirSimulation.pdb
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation\obj\Debug\netstandard2.0\SirSimulation.AssemblyInfoInputs.cache
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation\obj\Debug\netstandard2.0\SirSimulation.AssemblyInfo.cs
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation\obj\Debug\netstandard2.0\SirSimulation.dll
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation\obj\Debug\netstandard2.0\SirSimulation.pdb
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation\obj\Debug\netstandard2.0\SirSimulation.csprojAssemblyReference.cache
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation\obj\Debug\netstandard2.0\SirSimulation.csproj.CoreCompileInputs.cache

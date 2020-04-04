@@ -1,0 +1,4 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/Stephen/Source/Repos/SirSimulations/src/MonoGame/SirSimulation/Content/Sprites/Neutral16.png","C:/Users/Stephen/Source/Repos/SirSimulations/src/MonoGame/SirSimulation/Content/bin/Windows/Sprites/Neutral16.xnb","TextureProcessor","Texture2DContent",551,1109,0.3527914
+"C:/Users/Stephen/Source/Repos/SirSimulations/src/MonoGame/SirSimulation/Content/Sprites/Sick16.png","C:/Users/Stephen/Source/Repos/SirSimulations/src/MonoGame/SirSimulation/Content/bin/Windows/Sprites/Sick16.xnb","TextureProcessor","Texture2DContent",790,1109,0.0099893
+"C:/Users/Stephen/Source/Repos/SirSimulations/src/MonoGame/SirSimulation/Content/Sprites/Smile16.png","C:/Users/Stephen/Source/Repos/SirSimulations/src/MonoGame/SirSimulation/Content/bin/Windows/Sprites/Smile16.xnb","TextureProcessor","Texture2DContent",450,1109,0.3166773

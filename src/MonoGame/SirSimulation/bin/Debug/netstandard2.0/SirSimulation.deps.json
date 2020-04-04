@@ -1,0 +1,116 @@
+{
+  "runtimeTarget": {
+    "name": ".NETStandard,Version=v2.0/",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETStandard,Version=v2.0": {},
+    ".NETStandard,Version=v2.0/": {
+      "SirSimulation/1.0.0": {
+        "dependencies": {
+          "MonoGame.Extended": "3.7.0",
+          "MonoGame.Extended.Graphics": "3.7.0",
+          "MonoGame.Framework.DesktopGL.Core": "3.8.0.13",
+          "NETStandard.Library": "2.0.3"
+        },
+        "runtime": {
+          "SirSimulation.dll": {}
+        }
+      },
+      "Microsoft.NETCore.Platforms/1.1.0": {},
+      "MonoGame.Extended/3.7.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/MonoGame.Extended.dll": {
+            "assemblyVersion": "3.7.0.0",
+            "fileVersion": "3.7.0.0"
+          }
+        }
+      },
+      "MonoGame.Extended.Graphics/3.7.0": {
+        "dependencies": {
+          "MonoGame.Extended": "3.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/MonoGame.Extended.Graphics.dll": {
+            "assemblyVersion": "3.7.0.0",
+            "fileVersion": "3.7.0.0"
+          }
+        }
+      },
+      "MonoGame.Framework.DesktopGL.Core/3.8.0.13": {
+        "runtime": {
+          "lib/netstandard2.0/MonoGame.Framework.dll": {
+            "assemblyVersion": "3.8.0.13",
+            "fileVersion": "3.8.0.13"
+          }
+        }
+      },
+      "NETStandard.Library/2.0.3": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.1.0"
+        }
+      },
+      "Newtonsoft.Json/11.0.2": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.2.21924"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SirSimulation/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.NETCore.Platforms/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "path": "microsoft.netcore.platforms/1.1.0",
+      "hashPath": "microsoft.netcore.platforms.1.1.0.nupkg.sha512"
+    },
+    "MonoGame.Extended/3.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gnxfWcMLWke1I21T+0h8ckZnum2jzybfaDtMTk5LUaPTdLCIt4nHpRYM467JdpOte2wtUzsuTAtQtKICqYk9rg==",
+      "path": "monogame.extended/3.7.0",
+      "hashPath": "monogame.extended.3.7.0.nupkg.sha512"
+    },
+    "MonoGame.Extended.Graphics/3.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZbiCfH4Fwh12d0/DrsSaBBnS7v4T32ncWC6FSYrNWcOHfP0mifUpC12IpZ/wnM6cAvi3/BIPlF0yS4+tYfxOiQ==",
+      "path": "monogame.extended.graphics/3.7.0",
+      "hashPath": "monogame.extended.graphics.3.7.0.nupkg.sha512"
+    },
+    "MonoGame.Framework.DesktopGL.Core/3.8.0.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cMsc/UZFS8Uk/a1RDc8OZ9Z2EXrEglWGcZGSvPJiWEcUC5Oo9K9uoZXaprvesM3YbyT1ItzqS4jXjTDR4qT4WA==",
+      "path": "monogame.framework.desktopgl.core/3.8.0.13",
+      "hashPath": "monogame.framework.desktopgl.core.3.8.0.13.nupkg.sha512"
+    },
+    "NETStandard.Library/2.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
+      "path": "netstandard.library/2.0.3",
+      "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
+    },
+    "Newtonsoft.Json/11.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "path": "newtonsoft.json/11.0.2",
+      "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
+    }
+  }
+}
