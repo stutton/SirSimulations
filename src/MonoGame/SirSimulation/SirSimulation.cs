@@ -4,6 +4,7 @@ using SirSimulation.Engine;
 using SirSimulation.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SirSimulation
@@ -12,6 +13,8 @@ namespace SirSimulation
     {
         private List<Person> _people = new List<Person>();
         private List<City> _cities = new List<City>();
+
+        private double _lastSampleTime = -1;
 
         public SirSimulation(float infectionRate, double infectionDuration, int cityCount)
         {
@@ -24,14 +27,17 @@ namespace SirSimulation
         public double InfectionDuration { get; set; }
         public int CityCount { get; set; }
 
-        public void InitializeCities(Rectangle totalBounds)
+        public double SampleRate { get; set; } = 1;
+        public List<float> InfectedHistory { get; set; } = new List<float>();
+
+        public void InitializeCities(Rectangle totalBounds, int totalPopulation)
         {
             for (var i = 0; i < CityCount; i++)
             {
                 // TODO: Arrange multiple cities
                 var city = new City(
                     new Rectangle(totalBounds.X + 20, totalBounds.Y + 20, totalBounds.Width - 40, totalBounds.Height - 40),
-                    200);
+                    totalPopulation / CityCount);
                 _cities.Add(city);
             }
         }
@@ -43,7 +49,7 @@ namespace SirSimulation
                 for (var i = 0; i < city.Population; i++)
                 {
                     var person = new Person(sSprite, iSprite, rSprite);
-                    person.InfectionRadius = 20f;
+                    person.InfectionRadius = 30f;
                     city.AddPerson(person);
                     _people.Add(person);
                 }
@@ -114,6 +120,13 @@ namespace SirSimulation
                 {
                     rp.Update(gameTime);
                 }
+            }
+
+            // Update sample data
+            if (gameTime.TotalGameTime.TotalSeconds - _lastSampleTime > SampleRate)
+            {
+                InfectedHistory.Add(_cities.Sum(c => c.People[InfectionStatus.Infected].Count));
+                _lastSampleTime = gameTime.TotalGameTime.TotalSeconds;
             }
         }
     }

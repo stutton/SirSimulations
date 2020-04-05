@@ -29,3 +29,6 @@ C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation.DesktopG
 C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation.DesktopGL\bin\Debug\netcoreapp3.0\Newtonsoft.Json.dll
 C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation.DesktopGL\bin\Debug\netcoreapp3.0\Content\Sprites\Neutral16.xnb
 C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation.DesktopGL\bin\Debug\netcoreapp3.0\Content\Sprites\Sick16.xnb
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation.DesktopGL\bin\Debug\netcoreapp3.0\Content\Sprites\Blue16.xnb
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation.DesktopGL\bin\Debug\netcoreapp3.0\Content\Sprites\Gray16.xnb
+C:\Users\Stephen\Source\Repos\SirSimulations\src\MonoGame\SirSimulation.DesktopGL\bin\Debug\netcoreapp3.0\Content\Sprites\Red16.xnb
