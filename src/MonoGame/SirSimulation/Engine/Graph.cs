@@ -20,7 +20,7 @@ namespace SirSimulation.Engine
             _effect = new BasicEffect(graphicsDevice)
             {
                 View = Matrix.CreateLookAt(Vector3.Backward, Vector3.Zero, Vector3.Up),
-                Projection = Matrix.CreateOrthographicOffCenter(0, (float)graphicsDevice.Viewport.Width, (float)graphicsDevice.Viewport.Height, 0, 1.0f, 1000.0f),
+                Projection = Matrix.CreateOrthographicOffCenter(0, graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height, 0, 1.0f, 1000.0f),
                 World = Matrix.Identity,
                 VertexColorEnabled = true
             };
@@ -35,7 +35,6 @@ namespace SirSimulation.Engine
         public Vector2 Position { get; set; }
         public Point Size { get; set; }
         public float MaxValue { get; }
-        public BasicEffect Effect => _effect;
 
         public void Draw(List<(float value, Color color)> values)
         {
@@ -115,6 +114,90 @@ namespace SirSimulation.Engine
                 }
                 DrawTriangleStrip(pointList);
             }
+        }
+
+        public void DrawStacked(List<float[]> values, Color[] colors)
+        {
+            if (values.Count < 2)
+            {
+                return;
+            }
+
+            if (values[0].Length != colors.Length)
+            {
+                throw new InvalidOperationException("Length of values items must match the number of colors");
+            }
+
+            var xScale = Size.X / (float)values.Count;
+            var yScale = Size.Y / MaxValue;
+
+            _scale = new Vector2(xScale, yScale);
+            UpdateWorld();
+
+            if(Type == GraphType.Line)
+            {
+                var pointList = new List<VertexPositionColor[]>();
+                var i = 0;
+                for (i = 0; i < values[0].Length; i++)
+                {
+                    pointList.Add(new VertexPositionColor[values.Count]);
+                }
+                i = 0;
+                foreach (var value in values)
+                {
+                    var offset = 0f;
+                    for (var j = 0; j < values[0].Length; j++)
+                    {
+                        pointList[j][i] = new VertexPositionColor(
+                            new Vector3(i, value[j] + offset < MaxValue ? value[j] + offset : MaxValue, 0), colors[j]);
+                        offset += value[j];
+                    }
+                    i++;
+                }
+                foreach (var pList in pointList) 
+                {
+                    DrawLineList(pList);
+                }
+            }
+            else if (Type == GraphType.Fill)
+            {
+                var pointList = new List<VertexPositionColor[]>();
+                var i = 0;
+                for (i = 0; i < values[0].Length; i++)
+                {
+                    pointList.Add(new VertexPositionColor[values.Count * 2]);
+                }
+                i = 0;
+                foreach (var value in values)
+                {
+                    var offset = 0f;
+                    for (var j = 0; j < values[0].Length; j++)
+                    {
+                        pointList[j][i * 2 + 1] = new VertexPositionColor(
+                            new Vector3(i, value[j] + offset < MaxValue ? value[j] + offset : MaxValue, 0), colors[j]);
+                        pointList[j][i * 2] = new VertexPositionColor(new Vector3(i, offset, 0), colors[j]);
+                        offset += value[j];
+                    }
+                    i++;
+                }
+                foreach (var pList in pointList) 
+                {
+                    DrawTriangleStrip(pList);
+                }
+            }
+            //else if (Type == GraphType.Fill)
+            //{
+            //    var pointList = new VertexPositionColor[values.Count * 2];
+            //    var i = 0;
+            //    foreach (var value in values)
+            //    {
+            //        pointList[i * 2 + 1] = new VertexPositionColor(
+            //            new Vector3( i, value < MaxValue ? value : MaxValue, 0), color);
+            //        pointList[i * 2] = new VertexPositionColor(new Vector3(i, 0, 0), color);
+            //        i++;
+            //    }
+            //    DrawTriangleStrip(pointList);
+            //}
         }
 
         private void UpdateWorld()

@@ -10,13 +10,14 @@ namespace SirSimulation
     public class Game : Microsoft.Xna.Framework.Game
     {
         /********** Simulation Parameters ***********/
-        int    TOTAL_POPULATION   = 500;
-        float  INFECTION_RATE     = 0.5f;
+        int    TOTAL_POPULATION   = 600;
+        float  INFECTION_RATE     = 0.3f;
         double INFECTION_DURATION = 10;
+        float  INFECTION_RADIUS = 20f;
         /********************************************/
 
-        private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
+        private GraphicsDeviceManager _graphics;
+        private SpriteBatch _spriteBatch;
 
         private List<Engine.IDrawable> _drawables = new List<Engine.IDrawable>();
         private List<Engine.IUpdatable> _updateables = new List<Engine.IUpdatable>();
@@ -30,28 +31,28 @@ namespace SirSimulation
 
         public Game()
         {
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 800;
-            graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 800;
+            _graphics.ApplyChanges();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _sSprite = Content.Load<Texture2D>("Sprites/Blue16");
             _iSprite = Content.Load<Texture2D>("Sprites/Red16");
             _rSprite = Content.Load<Texture2D>("Sprites/Gray16");
 
-            _sirSimulation = new SirSimulation(INFECTION_RATE, INFECTION_DURATION, 1);
+            _sirSimulation = new SirSimulation(INFECTION_RATE, INFECTION_DURATION, INFECTION_RADIUS, 1);
             _sirSimulation.InitializeCities(
                 new Rectangle(
                     GraphicsDevice.Viewport.Bounds.X,
@@ -88,16 +89,16 @@ namespace SirSimulation
         {
             GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin();
+            _spriteBatch.Begin();
 
             foreach(var d in _drawables)
             {
-                d.Draw(gameTime, spriteBatch);
+                d.Draw(gameTime, _spriteBatch);
             }
 
-            _iGraph.Draw(_sirSimulation.InfectedHistory, Color.Red);
+            _iGraph.DrawStacked(_sirSimulation.History, new[] { Color.Red, Color.CornflowerBlue, Color.Gray });
 
-            spriteBatch.End();
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }

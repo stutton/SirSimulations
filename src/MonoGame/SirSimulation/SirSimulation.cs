@@ -16,19 +16,21 @@ namespace SirSimulation
 
         private double _lastSampleTime = -1;
 
-        public SirSimulation(float infectionRate, double infectionDuration, int cityCount)
+        public SirSimulation(float infectionRate, double infectionDuration, float infectionRadius, int cityCount)
         {
             InfectionRate = infectionRate;
             InfectionDuration = infectionDuration;
+            InfectionRadius = infectionRadius;
             CityCount = cityCount;
         }
 
         public float InfectionRate { get; set; }
         public double InfectionDuration { get; set; }
         public int CityCount { get; set; }
+        public float InfectionRadius { get; set; }
 
         public double SampleRate { get; set; } = 1;
-        public List<float> InfectedHistory { get; set; } = new List<float>();
+        public List<float[]> History { get; } = new List<float[]>();
 
         public void InitializeCities(Rectangle totalBounds, int totalPopulation)
         {
@@ -49,7 +51,7 @@ namespace SirSimulation
                 for (var i = 0; i < city.Population; i++)
                 {
                     var person = new Person(sSprite, iSprite, rSprite);
-                    person.InfectionRadius = 30f;
+                    person.InfectionRadius = InfectionRadius;
                     city.AddPerson(person);
                     _people.Add(person);
                 }
@@ -125,7 +127,12 @@ namespace SirSimulation
             // Update sample data
             if (gameTime.TotalGameTime.TotalSeconds - _lastSampleTime > SampleRate)
             {
-                InfectedHistory.Add(_cities.Sum(c => c.People[InfectionStatus.Infected].Count));
+                History.Add(new float[3] 
+                {
+                    _cities.Sum(c => c.People[InfectionStatus.Infected].Count),
+                    _cities.Sum(c => c.People[InfectionStatus.Susceptible].Count),
+                    _cities.Sum(c => c.People[InfectionStatus.Removed].Count),
+                });
                 _lastSampleTime = gameTime.TotalGameTime.TotalSeconds;
             }
         }
