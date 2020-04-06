@@ -7,28 +7,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SirSimulation
+namespace SirSimulation.Models
 {
-    public class SirSimulation : Engine.IUpdatable, Engine.IDrawable
+    public class Sir : Engine.IUpdatable, Engine.IDrawable
     {
         private List<Person> _people = new List<Person>();
         private List<City> _cities = new List<City>();
 
         private double _lastSampleTime = -1;
 
-        public SirSimulation(float infectionRate, double infectionDuration, float infectionRadius, int cityCount)
+        public Sir(Parameters parameters, int cityCount)
         {
-            InfectionRate = infectionRate;
-            InfectionDuration = infectionDuration;
-            InfectionRadius = infectionRadius;
+            Parameters = parameters;
             CityCount = cityCount;
         }
 
-        public float InfectionRate { get; set; }
-        public double InfectionDuration { get; set; }
+        public Parameters Parameters { get; }
         public int CityCount { get; set; }
-        public float InfectionRadius { get; set; }
-
         public double SampleRate { get; set; } = 1;
         public List<float[]> History { get; } = new List<float[]>();
 
@@ -51,7 +46,7 @@ namespace SirSimulation
                 for (var i = 0; i < city.Population; i++)
                 {
                     var person = new Person(sSprite, iSprite, rSprite);
-                    person.InfectionRadius = InfectionRadius;
+                    person.InfectionRadius = Parameters.InfectionRadius;
                     city.AddPerson(person);
                     _people.Add(person);
                 }
@@ -87,7 +82,7 @@ namespace SirSimulation
                     foreach(var sp in city.People[InfectionStatus.Susceptible])
                     {
                         var dist = Vector2.Distance(ip.Position, sp.Position);
-                        if (dist < ip.InfectionRadius && Utils.Random.NextFloat() < InfectionRate * gameTime.ElapsedGameTime.TotalSeconds)
+                        if (dist < ip.InfectionRadius && Utils.Random.NextFloat() < Parameters.InfectionRate * gameTime.ElapsedGameTime.TotalSeconds)
                         {
                             sp.SetStatus(InfectionStatus.Infected, gameTime);
                             changed.Add((InfectionStatus.Susceptible, sp));
@@ -99,7 +94,7 @@ namespace SirSimulation
                         }
                     }
                     doUpdate = false;
-                    if(gameTime.TotalGameTime.TotalSeconds - ip.InfectionStartTime > InfectionDuration)
+                    if(gameTime.TotalGameTime.TotalSeconds - ip.InfectionStartTime > Parameters.InfectionDuration)
                     {
                         ip.SetStatus(InfectionStatus.Removed, gameTime);
                         changed.Add((InfectionStatus.Infected, ip));

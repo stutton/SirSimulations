@@ -9,12 +9,13 @@ namespace SirSimulation
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
-        /********** Simulation Parameters ***********/
-        int    TOTAL_POPULATION   = 600;
-        float  INFECTION_RATE     = 0.3f;
-        double INFECTION_DURATION = 10;
-        float  INFECTION_RADIUS = 20f;
-        /********************************************/
+        private Parameters _parameters = new Parameters
+        {
+            TotalPopulation = 600,
+            InfectionRate = 0.3f,
+            InfectionDuration = 7,
+            InfectionRadius = 25f
+        };
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -26,7 +27,7 @@ namespace SirSimulation
         private Texture2D _iSprite;
         private Texture2D _rSprite;
 
-        private SirSimulation _sirSimulation;
+        private Sir _sirSimulation;
         private Engine.Graph _iGraph;
 
         public Game()
@@ -38,7 +39,7 @@ namespace SirSimulation
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferWidth = 1000;
             _graphics.PreferredBackBufferHeight = 800;
             _graphics.ApplyChanges();
             base.Initialize();
@@ -52,24 +53,29 @@ namespace SirSimulation
             _iSprite = Content.Load<Texture2D>("Sprites/Red16");
             _rSprite = Content.Load<Texture2D>("Sprites/Gray16");
 
-            _sirSimulation = new SirSimulation(INFECTION_RATE, INFECTION_DURATION, INFECTION_RADIUS, 1);
+            _sirSimulation = new Sir(_parameters, 1);
             _sirSimulation.InitializeCities(
                 new Rectangle(
                     GraphicsDevice.Viewport.Bounds.X,
                     GraphicsDevice.Viewport.Bounds.Y,
-                    GraphicsDevice.Viewport.Bounds.Width,
+                    GraphicsDevice.Viewport.Bounds.Width - 200,
                     GraphicsDevice.Viewport.Bounds.Height - 200),
-                TOTAL_POPULATION);
+                _parameters.TotalPopulation);
             _sirSimulation.InitializePeople(_sSprite, _iSprite, _rSprite);
             _sirSimulation.SampleRate = 0.10;
             _drawables.Add(_sirSimulation);
             _updateables.Add(_sirSimulation);
 
-            _iGraph = new Engine.Graph(GraphicsDevice, new Point(GraphicsDevice.Viewport.Bounds.Width - 40, 200 - 20), TOTAL_POPULATION)
+            _iGraph = new Engine.Graph(GraphicsDevice, new Point(GraphicsDevice.Viewport.Bounds.Width - 40, 200 - 20), _parameters.TotalPopulation)
             {
                 Position = new Vector2(20, GraphicsDevice.Viewport.Bounds.Height - 20),
                 Type = Engine.Graph.GraphType.Fill
             };
+
+            var headerFont = Content.Load<SpriteFont>("Fonts/Heading");
+            var bodyFont = Content.Load<SpriteFont>("Fonts/Body");
+            var paramText = new ParametersText(_parameters, headerFont, bodyFont, new Vector2(800, 20));
+            _drawables.Add(paramText);
         }
 
         protected override void Update(GameTime gameTime)
