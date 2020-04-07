@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using SirSimulation.Models;
 using System.Collections.Generic;
 using MonoGame.Extended;
+using SirSimulation.Engine.UI;
 
 namespace SirSimulation
 {
@@ -12,7 +13,7 @@ namespace SirSimulation
         private Parameters _parameters = new Parameters
         {
             TotalPopulation = 600,
-            InfectionRate = 0.3f,
+            InfectionRate = 0.15f,
             InfectionDuration = 7,
             InfectionRadius = 25f
         };
@@ -22,6 +23,7 @@ namespace SirSimulation
 
         private List<Engine.IDrawable> _drawables = new List<Engine.IDrawable>();
         private List<Engine.IUpdatable> _updateables = new List<Engine.IUpdatable>();
+        private List<Control> _uiControls = new List<Control>();
 
         private Texture2D _sSprite;
         private Texture2D _iSprite;
@@ -29,6 +31,8 @@ namespace SirSimulation
 
         private Sir _sirSimulation;
         private Engine.Graph _iGraph;
+
+        private bool _running = false;
 
         public Game()
         {
@@ -66,7 +70,7 @@ namespace SirSimulation
             _drawables.Add(_sirSimulation);
             _updateables.Add(_sirSimulation);
 
-            _iGraph = new Engine.Graph(GraphicsDevice, new Point(GraphicsDevice.Viewport.Bounds.Width - 40, 200 - 20), _parameters.TotalPopulation)
+            _iGraph = new Engine.Graph(GraphicsDevice, new Point(GraphicsDevice.Viewport.Bounds.Width - 240, 200 - 20), _parameters.TotalPopulation)
             {
                 Position = new Vector2(20, GraphicsDevice.Viewport.Bounds.Height - 20),
                 Type = Engine.Graph.GraphType.Fill
@@ -76,6 +80,20 @@ namespace SirSimulation
             var bodyFont = Content.Load<SpriteFont>("Fonts/Body");
             var paramText = new ParametersText(_parameters, headerFont, bodyFont, new Vector2(800, 20));
             _drawables.Add(paramText);
+
+            var startButton = new Button(
+                new RectangleF(
+                    GraphicsDevice.Viewport.Bounds.Width - 200,
+                    GraphicsDevice.Viewport.Bounds.Height - 70,
+                    180,
+                    50))
+            {
+                Font = bodyFont,
+                Text = "Start",
+                ClickAction = () => _running = true
+            };
+            _drawables.Add(startButton);
+            _uiControls.Add(startButton);
         }
 
         protected override void Update(GameTime gameTime)
@@ -83,9 +101,17 @@ namespace SirSimulation
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            foreach(var u in _updateables)
+            foreach(var control in _uiControls)
             {
-                u.Update(gameTime);
+                control.Update(gameTime);
+            }
+
+            if (_running)
+            {
+                foreach (var u in _updateables)
+                {
+                    u.Update(gameTime);
+                }
             }
 
             base.Update(gameTime);
