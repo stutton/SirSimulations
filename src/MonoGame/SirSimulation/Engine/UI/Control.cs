@@ -24,8 +24,15 @@ namespace SirSimulation.Engine.UI
         public RectangleF Bounds { get; set; }
         public Color Color { get; set; } = Color.White;
         public Color MouseOverColor { get; set; } = Color.CornflowerBlue;
+        public bool Visible { get; set; } = true;
 
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            if (Visible)
+            {
+                OnDraw(gameTime, spriteBatch);
+            }
+        }
 
         public virtual void Update(GameTime gameTime)
         {
@@ -54,6 +61,7 @@ namespace SirSimulation.Engine.UI
             }
         }
 
+        protected virtual void OnDraw(GameTime gameTime, SpriteBatch spriteBatch) { }
         protected virtual void OnClick() { }
         protected virtual void OnMouseOver() 
         {

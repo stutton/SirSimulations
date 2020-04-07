@@ -90,10 +90,10 @@ namespace SirSimulation
             {
                 Font = bodyFont,
                 Text = "Start",
-                ClickAction = () => _running = true
+                ClickAction = () => _sirSimulation.Start()
             };
             _drawables.Add(startButton);
-            _uiControls.Add(startButton);
+            _updateables.Add(startButton);
         }
 
         protected override void Update(GameTime gameTime)
@@ -101,17 +101,9 @@ namespace SirSimulation
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            foreach(var control in _uiControls)
+            foreach (var u in _updateables)
             {
-                control.Update(gameTime);
-            }
-
-            if (_running)
-            {
-                foreach (var u in _updateables)
-                {
-                    u.Update(gameTime);
-                }
+                u.Update(gameTime);
             }
 
             base.Update(gameTime);

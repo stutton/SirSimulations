@@ -11,6 +11,9 @@ namespace SirSimulation.Models
 {
     public class Sir : Engine.IUpdatable, Engine.IDrawable
     {
+        private TimeSpan _simulationTime;
+        private bool _running = false;
+
         private List<Person> _people = new List<Person>();
         private List<City> _cities = new List<City>();
 
@@ -58,6 +61,21 @@ namespace SirSimulation.Models
             patientZero.City.People[patientZero.Status].Add(patientZero);
         }
 
+        public void Start()
+        {
+            _running = true;
+        }
+
+        public void Pause()
+        {
+            _running = false;
+        }
+
+        public void Reset()
+        {
+
+        }
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             foreach (var city in _cities)
@@ -73,6 +91,14 @@ namespace SirSimulation.Models
 
         public void Update(GameTime gameTime)
         {
+            if (!_running)
+            {
+                return;
+            }
+
+            var simElapsedTime = gameTime.ElapsedGameTime;
+            _simulationTime += simElapsedTime;
+
             foreach(var city in _cities)
             {
                 var doUpdate = true;
@@ -90,7 +116,7 @@ namespace SirSimulation.Models
                         }
                         if (doUpdate)
                         {
-                            sp.Update(gameTime);
+                            sp.Update(_simulationTime, simElapsedTime);
                         }
                     }
                     doUpdate = false;
@@ -99,7 +125,7 @@ namespace SirSimulation.Models
                         ip.SetStatus(InfectionStatus.Removed, gameTime);
                         changed.Add((InfectionStatus.Infected, ip));
                     }
-                    ip.Update(gameTime);
+                    ip.Update(_simulationTime, simElapsedTime);
                 }
                 foreach(var (status, person) in changed)
                 {
@@ -110,12 +136,12 @@ namespace SirSimulation.Models
                 {
                     foreach(var sp in city.People[InfectionStatus.Susceptible])
                     {
-                        sp.Update(gameTime);
+                        sp.Update(_simulationTime, simElapsedTime);
                     }
                 }
                 foreach(var rp in city.People[InfectionStatus.Removed])
                 {
-                    rp.Update(gameTime);
+                    rp.Update(_simulationTime, simElapsedTime);
                 }
             }
 

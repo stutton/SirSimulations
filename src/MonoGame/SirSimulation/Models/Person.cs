@@ -10,7 +10,7 @@ using MonoGame.Extended;
 
 namespace SirSimulation.Models
 {
-    public class Person : IUpdatable, Engine.IDrawable
+    public class Person : Engine.IDrawable
     {
         private readonly Texture2D _sSprite;
         private readonly Texture2D _iSprite;
@@ -68,18 +68,18 @@ namespace SirSimulation.Models
             Status = newStatus;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(TimeSpan totalTime, TimeSpan elapsedTime)
         {
             var totalForce = Vector2.Zero;
 
             // Wander
             if (WanderStepSize != 0)
             {
-                if (gameTime.TotalGameTime.TotalSeconds - _lastStepChange > WanderStepDuration)
+                if (totalTime.TotalSeconds - _lastStepChange > WanderStepDuration)
                 {
                     var vect = Constants.Right.Rotate(MathHelper.TwoPi * Utils.Random.NextFloat());
                     GravityWell = Position + (vect * WanderStepSize);
-                    _lastStepChange = gameTime.TotalGameTime.TotalSeconds;
+                    _lastStepChange = totalTime.TotalSeconds;
                 }
             }
 
@@ -130,7 +130,7 @@ namespace SirSimulation.Models
                 Velocity *= MaxSpeed / speed;
             }
 
-            var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            var dt = (float)elapsedTime.TotalSeconds;
 
             Velocity += totalForce * dt;
 

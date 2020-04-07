@@ -21,7 +21,7 @@ namespace SirSimulation.Engine.UI
         public SpriteFont Font { get; set; }
         public Action ClickAction { get; set; }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        protected override void OnDraw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.DrawRectangle(Bounds, CurrentColor);
             spriteBatch.DrawStringAligned(Font, Text, Bounds, Utils.Alignment.Center, CurrentColor);
