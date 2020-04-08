@@ -47,7 +47,7 @@ namespace SirSimulation.Models
         public int NumInfected { get; set; } = 0;
         public City City { get; set; }
 
-        public void SetStatus(InfectionStatus newStatus, GameTime gameTime)
+        public void SetStatus(InfectionStatus newStatus, TimeSpan totalTime)
         {
             switch (newStatus)
             {
@@ -56,11 +56,11 @@ namespace SirSimulation.Models
                     break;
                 case InfectionStatus.Infected:
                     _currentSprite = _iSprite;
-                    InfectionStartTime = gameTime.TotalGameTime.TotalSeconds;
+                    InfectionStartTime = totalTime.TotalSeconds;
                     break;
                 case InfectionStatus.Removed:
                     _currentSprite = _rSprite;
-                    InfectionEndTime = gameTime.TotalGameTime.TotalSeconds;
+                    InfectionEndTime = totalTime.TotalSeconds;
                     break;
                 default:
                     break;

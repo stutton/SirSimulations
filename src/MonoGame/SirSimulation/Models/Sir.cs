@@ -57,18 +57,14 @@ namespace SirSimulation.Models
             var index = Utils.Random.Next(0, _people.Count - 1);
             var patientZero = _people[index];
             patientZero.City.People[patientZero.Status].Remove(patientZero);
-            patientZero.SetStatus(InfectionStatus.Infected, new GameTime());
+            patientZero.SetStatus(InfectionStatus.Infected, new TimeSpan());
             patientZero.City.People[patientZero.Status].Add(patientZero);
         }
 
-        public void Start()
+        public bool StartPause()
         {
-            _running = true;
-        }
-
-        public void Pause()
-        {
-            _running = false;
+            _running = !_running;
+            return _running;
         }
 
         public void Reset()
@@ -108,9 +104,9 @@ namespace SirSimulation.Models
                     foreach(var sp in city.People[InfectionStatus.Susceptible])
                     {
                         var dist = Vector2.Distance(ip.Position, sp.Position);
-                        if (dist < ip.InfectionRadius && Utils.Random.NextFloat() < Parameters.InfectionRate * gameTime.ElapsedGameTime.TotalSeconds)
+                        if (dist < ip.InfectionRadius && Utils.Random.NextFloat() < Parameters.InfectionRate * simElapsedTime.TotalSeconds)
                         {
-                            sp.SetStatus(InfectionStatus.Infected, gameTime);
+                            sp.SetStatus(InfectionStatus.Infected, _simulationTime);
                             changed.Add((InfectionStatus.Susceptible, sp));
                             ip.NumInfected++;
                         }
@@ -120,9 +116,9 @@ namespace SirSimulation.Models
                         }
                     }
                     doUpdate = false;
-                    if(gameTime.TotalGameTime.TotalSeconds - ip.InfectionStartTime > Parameters.InfectionDuration)
+                    if(_simulationTime.TotalSeconds - ip.InfectionStartTime > Parameters.InfectionDuration)
                     {
-                        ip.SetStatus(InfectionStatus.Removed, gameTime);
+                        ip.SetStatus(InfectionStatus.Removed, _simulationTime);
                         changed.Add((InfectionStatus.Infected, ip));
                     }
                     ip.Update(_simulationTime, simElapsedTime);
@@ -146,7 +142,7 @@ namespace SirSimulation.Models
             }
 
             // Update sample data
-            if (gameTime.TotalGameTime.TotalSeconds - _lastSampleTime > SampleRate)
+            if (_simulationTime.TotalSeconds - _lastSampleTime > SampleRate)
             {
                 History.Add(new float[3] 
                 {
@@ -154,7 +150,7 @@ namespace SirSimulation.Models
                     _cities.Sum(c => c.People[InfectionStatus.Susceptible].Count),
                     _cities.Sum(c => c.People[InfectionStatus.Removed].Count),
                 });
-                _lastSampleTime = gameTime.TotalGameTime.TotalSeconds;
+                _lastSampleTime = _simulationTime.TotalSeconds;
             }
         }
     }

@@ -13,7 +13,7 @@ namespace SirSimulation
         private Parameters _parameters = new Parameters
         {
             TotalPopulation = 600,
-            InfectionRate = 0.15f,
+            InfectionRate = 0.3f,
             InfectionDuration = 7,
             InfectionRadius = 25f
         };
@@ -23,7 +23,6 @@ namespace SirSimulation
 
         private List<Engine.IDrawable> _drawables = new List<Engine.IDrawable>();
         private List<Engine.IUpdatable> _updateables = new List<Engine.IUpdatable>();
-        private List<Control> _uiControls = new List<Control>();
 
         private Texture2D _sSprite;
         private Texture2D _iSprite;
@@ -31,8 +30,6 @@ namespace SirSimulation
 
         private Sir _sirSimulation;
         private Engine.Graph _iGraph;
-
-        private bool _running = false;
 
         public Game()
         {
@@ -81,7 +78,7 @@ namespace SirSimulation
             var paramText = new ParametersText(_parameters, headerFont, bodyFont, new Vector2(800, 20));
             _drawables.Add(paramText);
 
-            var startButton = new Button(
+            var startPauseButton = new Button(
                 new RectangleF(
                     GraphicsDevice.Viewport.Bounds.Width - 200,
                     GraphicsDevice.Viewport.Bounds.Height - 70,
@@ -90,10 +87,20 @@ namespace SirSimulation
             {
                 Font = bodyFont,
                 Text = "Start",
-                ClickAction = () => _sirSimulation.Start()
             };
-            _drawables.Add(startButton);
-            _updateables.Add(startButton);
+            startPauseButton.ClickAction = () =>
+            {
+                if (_sirSimulation.StartPause()) 
+                {
+                    startPauseButton.Text = "Pause";
+                }
+                else
+                {
+                    startPauseButton.Text = "Start";
+                }
+            };
+            _drawables.Add(startPauseButton);
+            _updateables.Add(startPauseButton);
         }
 
         protected override void Update(GameTime gameTime)
