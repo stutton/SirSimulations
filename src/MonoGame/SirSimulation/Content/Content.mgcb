@@ -10,22 +10,26 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\..\..\..\..\..\.nuget\packages\monogame.extended.content.pipeline\3.7.0\lib\netstandard2.0\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Fonts/Body.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Body.spritefont
+#begin Fonts/Calibri.fnt
+/importer:
+/processor:
+/build:Fonts/Calibri.fnt
 
-#begin Fonts/Heading.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
+#begin Fonts/Calibri_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Heading.spritefont
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fonts/Calibri_0.png
 
 #begin Sprites/Blue16.png
 /importer:TextureImporter

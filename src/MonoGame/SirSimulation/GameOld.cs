@@ -8,7 +8,7 @@ using SirSimulation.Engine.UI;
 
 namespace SirSimulation
 {
-    public class Game : Microsoft.Xna.Framework.Game
+    public class GameOld : Microsoft.Xna.Framework.Game
     {
         private Parameters _parameters = new Parameters
         {
@@ -31,7 +31,7 @@ namespace SirSimulation
         private Sir _sirSimulation;
         private Engine.Graph _iGraph;
 
-        public Game()
+        public GameOld()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";

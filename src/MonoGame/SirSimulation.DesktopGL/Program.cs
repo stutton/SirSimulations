@@ -7,7 +7,7 @@ namespace SirSimulation.DesktopGL
         [STAThread]
         static void Main()
         {
-            using (var game = new global::SirSimulation.Game())
+            using (var game = new global::SirSimulation.GameOld())
                 game.Run();
         }
     }
